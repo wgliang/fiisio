@@ -1,7 +1,3 @@
-# fiisio
-NLP just for sentiment analysis that learn from snownlp !
-
-~~~~{python}
 # -*- coding: utf-8 -*-
 import fiisio
 
@@ -30,4 +26,3 @@ import fiisio
 # print v
 
 # ------------------------------------------------------------
-~~~~

@@ -1,18 +1,17 @@
 # -*- coding: utf-8 -*-
-from library.normal import get_sentences
-import library.segmentation
-import library.tagger
-from library.sentiment import classify
-import library.bm25
-import library.frequence
-import library.merger
-import library.model
-import library.seg_init
-import library.textrank
-import library.tnt
-import library.trie
-
-
+from library import normal
+from library import segmentation
+from library import tagger
+from library import sentiment 
+from library import bm25
+from library import frequence
+from library import merger
+from library import model
+from library import segger
+from library import textrank
+from library import tnt
+from library import trie
+                
 class Fiisio(object):
 
     def __init__(self, doc):
@@ -21,7 +20,7 @@ class Fiisio(object):
 
     @property
     def words(self):
-        return seg.seg(self.doc)
+        return segger.seg(self.doc)
 
     @property
     def sentences(self):
@@ -29,12 +28,12 @@ class Fiisio(object):
 
     @property
     def sentiment(self):
-        return classify(self.doc)
+        return sentiment.classify(self.doc)
 
     @property
     def tags(self):
         words = self.words
-        tags = tag.tag(words)
+        tags = tagger.tag(words)
         return zip(words, tags)
 
     @property
@@ -46,21 +45,7 @@ class Fiisio(object):
         return self.bm25.idf
 
     def sim(self, doc):
-        return self.bm25.simall(doc)
-
-    def summary(self, limit=5):
-        doc = []
-        sents = self.sentences
-        for sent in sents:
-            words = seg.seg(sent)
-            words = normal.filter_stop(words)
-            doc.append(words)
-        rank = textrank.TextRank(doc)
-        rank.solve()
-        ret = []
-        for index in rank.top_index(limit):
-            ret.append(sents[index])
-        return ret
+        return self.bm25.simall(doc) 
 
     def keywords(self, limit=5, merge=False):
         doc = []
